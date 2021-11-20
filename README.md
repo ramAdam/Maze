@@ -1,4 +1,4 @@
-# PythonCITemplate
-Continuous testing template for python projects. See "run.txt" to see, how to run it
+# Maze for programmers
+Implementation of maze algorithms from the book Maze for programmers
 
  
