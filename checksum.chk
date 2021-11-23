@@ -1,2 +1,3 @@
-e1c7b2bbc6ecb099beedec4dab1c096e  tests/integration/test_integeration.py
-b78738f8d2c14c60e9514ae0a8e2ab3b  tests/unit/test_animals.py
+74fb2312eed59c48255ea3d0268ad953  tests/integration/test_algos.py
+fc8dddee7748ba65dcda78e748bd859c  tests/unit/test_algos.py
+600435f7ee7ac37126c5326feafd143e  tests/unit/test_board.py

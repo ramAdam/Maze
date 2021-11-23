@@ -35,11 +35,11 @@ class Grid:
         for idx in range(0, len(grid)):
             self.east.append(grid[idx][self.col-1])
 
-    def get_neighbors(self, cell):
-        """
-        returns list of all neighboring cells
-        """
-        return [nbr for nbr in cell if nbr]
+    # def get_neighbors(self, cell):
+    #     """
+    #     returns list of all neighboring cells
+    #     """
+    #     return [nbr for nbr in cell if nbr]
 
     def cell_in_cornor(self, dir, cell):
         """
@@ -66,6 +66,8 @@ class Grid:
 
     def get_location(self, cell):
         # row, col = (cell.row, cell.col)
+        # if cell.row == 2 and cell.col == 2:
+        #     pdb.set_trace()
         IS_FIRST_ROW = (cell.row == 0)
         IS_LAST_ROW = (cell.row == self.row-1)
         IS_FIRST_COL = (cell.col == 0)
@@ -104,6 +106,10 @@ class Grid:
             return map.MID
 
     def _get_nbrs(self, row, col):
+        """
+        set directions of a cell at row, col
+        with neighbouring cells
+        """
 
         ABOVE = (row-1, col)
         BELOW = (row+1, col)
@@ -118,6 +124,18 @@ class Grid:
                 self[row, col].nbrs[dir] = None
 
         return self[row, col].nbrs
+
+    def link(self, cell, connection):
+        """
+        disconnects all links of the cell except
+        the direction 
+        """
+        if not connection:
+            return
+
+        for dir in direction:
+            if dir != connection:
+                cell.nbrs[dir] = None
 
     def __iter__(self):
         return GridIterator(self)
