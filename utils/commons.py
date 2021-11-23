@@ -1,5 +1,5 @@
 from collections import namedtuple
-
+import pdb
 
 Direction = namedtuple("Direction", "NORTH, SOUTH, EAST, WEST")
 Map = namedtuple(

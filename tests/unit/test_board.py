@@ -1,5 +1,6 @@
 from maze.board import Grid, Cell
 from utils.commons import direction, map
+from testdata.data import *
 import unittest
 import pdb
 
@@ -20,32 +21,35 @@ class TestGrid(unittest.TestCase):
         self.grid = Grid(4, 4)
         self.cell = Cell(1, 4)
 
-    def test_get_neighbors(self):
-        nbrs = self.grid.get_neighbors(self.cell)
-        self.assertEqual(len(nbrs), 0)
-
     def test_link_nbrs(self):
-        cell = Cell(1, 3)
-        nbr = Cell(2, 3)
-        grid = Grid(4, 4)
-        grid.link(cell, nbr, "south")
+        """
+        should disconnect all connections
+        in a cell except the desired link
+        """
+
+        self.grid.link(cell_with_all_nbrs_set, direction.EAST)
+
+        for dir in direction:
+            if dir == direction.EAST:
+                self.assertEqual(cell_with_all_nbrs_set.nbrs[dir], east)
+            else:
+                self.assertIsNone(cell_with_all_nbrs_set.nbrs[dir])
 
     def test_get_nbrs(self):
 
-        cell = self.grid._get_nbrs(0, 0)
+        nbrs = self.grid._get_nbrs(0, 0)
+        south = nbrs[direction.SOUTH]
+        east = nbrs[direction.EAST]
 
-        south = cell.nbrs[direction.SOUTH]
-        east = cell.nbrs[direction.EAST]
+        self.assertIsNone(nbrs[direction.NORTH])
+        self.assertIsNotNone(nbrs[direction.SOUTH])
 
-        self.assertIsNone(cell.nbrs[direction.NORTH])
-        self.assertIsNotNone(cell.nbrs[direction.SOUTH])
+        self.assertEqual((south.row, south.col), (1, 0))
 
-        self.assertEquals((south.row, south.col), (1, 0))
+        self.assertIsNone(nbrs[direction.WEST])
+        self.assertIsNotNone(nbrs[direction.EAST])
 
-        self.assertIsNone(cell.nbrs[direction.WEST])
-        self.assertIsNotNone(cell.nbrs[direction.EAST])
-
-        self.assertEquals((east.row, east.col), (0, 1))
+        self.assertEqual((east.row, east.col), (0, 1))
 
     def test_get_location(self):
         # mid_north = self.grid[0, 1]
