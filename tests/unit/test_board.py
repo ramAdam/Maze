@@ -14,6 +14,24 @@ class TestCell(unittest.TestCase):
         for nbr in self.cell:
             self.assertIsNone(nbr)
 
+    def test_repr(self):
+        cell_1 = Cell(2, 2)
+        north = Cell(1, 2)
+        south = Cell(3, 2)
+        east = Cell(2, 3)
+        west = Cell(2, 1)
+
+        cell_1.nbrs = {direction.NORTH: north, direction.SOUTH: south,
+                       direction.EAST: east, direction.WEST: west}
+
+        self.assertEqual(cell_1.__str__(), "|__|")
+
+        cell_2 = cell_with_west_east
+        self.assertEqual(cell_2.__str__(), "|  |")
+
+        cell_3 = cell_with_south_side
+        self.assertEqual(cell_3.__str__(), " __ ")
+
 
 class TestGrid(unittest.TestCase):
 

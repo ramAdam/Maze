@@ -181,5 +181,49 @@ class Cell:
     def __repr__(self):
         return f"Cell(row={self.row}, col={self.col})"
 
+    def __setitem__(self, key, val):
+        self.nbrs[key] = val
+
+    def __getitem__(self, key):
+        return self.nbrs[key]
+
     def __eq__(self, other):
+        if not other:
+            raise ValueError("other can't be None")
         return self.row == other.row and self.col == other.col
+
+    def __repr__(self):
+        return "Cell(row={}, col={})".format(self.row, self.col)
+
+    def __str__(self):
+
+        bounds = dict()
+        close_south = "__"
+        close_pipe = "|"
+        open = "  "
+        for dir, cell in self.nbrs.items():
+            if dir == direction.WEST and cell:
+                if cell.nbrs[direction.EAST]:
+                    bounds[1] = open
+                else:
+                    bounds[1] = close_pipe
+            elif (dir == direction.WEST) and (not cell):
+                bounds[1] = "|"
+            # if dir == direction.EAST and (not cell):
+            #     bounds[3] = "|"
+            elif (dir == direction.SOUTH) and cell:
+                if cell[direction.NORTH]:
+                    bounds[2] = open
+                elif cell[direction.SOUTH]:
+                    bounds[2] = open
+                else:
+                    bounds[2] = close_south
+            elif (dir == direction.SOUTH) and (not cell):
+                bounds[2] = close_south
+            # elif dir == direction.EAST and cell:
+            #     bounds[2] = " "
+
+        sorted_pipes = {key: val for key, val in sorted(bounds.items())}
+
+        pdb.set_trace()
+        return "".join(sorted_pipes.values())
